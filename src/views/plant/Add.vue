@@ -1,15 +1,26 @@
 <template>
-  <div>
-    <h2>生成二维码</h2>
-    <input v-model="text" placeholder="输入内容" />
-    <button @click="generateQRCode">生成二维码</button>
-    <button @click="generateQRCode">批量生成二维码</button>
-    <div v-if="qrCodeUrl">
-      <h3>二维码图片：</h3>
-      <img :src="qrCodeUrl" alt="QR Code" />
+  <page-header-wrapper>
+    <div>
+      <h2>生成二维码</h2>
+      <input
+        v-model="text"
+        placeholder="输入内容"
+      />
+      <button @click="generateQRCode">生成二维码</button>
+      <button @click="generateQRCode">批量生成二维码</button>
+      <div v-if="qrCodeUrl">
+        <h3>二维码图片：</h3>
+        <img
+          :src="qrCodeUrl"
+          alt="QR Code"
+        />
+      </div>
+      <button
+        @click="downloadQRCode"
+        v-if="qrCodeUrl"
+      >下载二维码</button>
     </div>
-    <button @click="downloadQRCode" v-if="qrCodeUrl">下载二维码</button>
-  </div>
+  </page-header-wrapper>
 </template>
 
 <script>

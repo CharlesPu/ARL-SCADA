@@ -36,10 +36,11 @@ export const asyncRouterMap = [
             meta: { title: '区域信息', keepAlive: false }
           },
           {
-            path: '/plant/id',
-            name: 'PlantsID',
-            component: () => import('@/views/plant/ID'),
-            meta: { title: '标识管理', keepAlive: false }
+            path: '/plant/add',
+            name: 'PlantsAdd',
+            hidden: true,
+            component: () => import('@/views/plant/Add'),
+            meta: { title: '新增植株', keepAlive: false }
           },
           {
             path: '/plant/list',
@@ -70,11 +71,11 @@ export const asyncRouterMap = [
             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: ['dashboard'] }
           },
           // 外部链接
-          // {
-          //   path: 'https://www.baidu.com/',
-          //   name: 'Monitor',
-          //   meta: { title: 'menu.dashboard.monitor', target: '_blank' }
-          // },
+          {
+            path: 'https://www.baidu.com/',
+            name: 'Monitor',
+            meta: { title: 'menu.dashboard.monitor', target: '_blank' }
+          },
           {
             path: '/dashboard/workplace',
             name: 'Workplace',
