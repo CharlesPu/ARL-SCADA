@@ -13,8 +13,43 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/plant',
+    redirect: '/meta',
     children: [
+      {
+        path: '/meta',
+        name: 'meta',
+        redirect: '/meta/area',
+        component: RouteView,
+        meta: { title: '元数据管理', keepAlive: true, icon: bxAnaalyse },
+        children: [
+          {
+            path: '/meta/area',
+            name: 'AreaMeta',
+            component: () => import('@/views/meta/Area'),
+            meta: { title: '区域管理', keepAlive: false }
+          },
+          {
+            path: '/meta/area-detail',
+            name: 'AreaMetaDetail',
+            hidden: true,
+            component: () => import('@/views/meta/AreaDetail'),
+            meta: { title: '区域详情', keepAlive: false }
+          },
+          {
+            path: '/meta/plant',
+            name: 'PlantMeta',
+            component: () => import('@/views/meta/Plant'),
+            meta: { title: '植株管理', keepAlive: false }
+          },
+          {
+            path: '/meta/plant-detail',
+            name: 'PlantMetaDetail',
+            hidden: true,
+            component: () => import('@/views/meta/PlantDetail'),
+            meta: { title: '植株详情', keepAlive: false }
+          }
+        ]
+      },
       {
         path: '/plant',
         name: 'plant',

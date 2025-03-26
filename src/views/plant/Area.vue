@@ -209,7 +209,7 @@ export default {
     },
     // 处理卡片点击事件
     handleCardClick (item) {
-      this.$router.push({ path: '/plant/area-detail', query: { id: 1 } }) // 跳转到指定路由
+      this.$router.push({ name: 'PlantsAreaDetail', params: { id: item.id } }) // 跳转到指定路由
     }
   }
 }
