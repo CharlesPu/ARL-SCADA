@@ -25,7 +25,7 @@ export const asyncRouterMap = [
           {
             path: '/meta/area',
             name: 'AreaMeta',
-            component: () => import('@/views/meta/Area'),
+            component: () => import('@/views/meta/AreaV2'),
             meta: { title: '区域管理', keepAlive: false }
           },
           {
