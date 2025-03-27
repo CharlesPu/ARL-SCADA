@@ -6,19 +6,14 @@
     >
       <template #title>
         <div class="title-container">
-          <a-button
-            type="link"
-            @click="handleBack"
-            class="back-btn"
-          >
-            <a-icon type="arrow-left" />
-          </a-button>
+          <p-back-btn></p-back-btn>
           <div class="action-buttons">
             <a-button
               htmlType="submit"
               type="primary"
-            >{{ $t('form.basic-form.form.submit') }}</a-button>
-            <a-button style="margin-left: 8px">{{ $t('form.basic-form.form.save') }}</a-button>
+              @click="handleSubmit"
+            >提交</a-button>
+            <a-button style="margin-left: 8px">保存</a-button>
           </div>
         </div>
       </template>
@@ -27,15 +22,15 @@
         :form="form"
       >
         <a-form-item
-          :label="$t('form.basic-form.title.label')"
+          label="区域名称"
           :labelCol="{ lg: { span: 7 }, sm: { span: 7 } }"
           :wrapperCol="{ lg: { span: 10 }, sm: { span: 17 } }"
         >
           <a-input
             v-decorator="[
-        'name',
-        { rules: [{ required: true, message: $t('form.basic-form.title.required') }] }
-      ]"
+              'name',
+              { rules: [{ required: true, message: $t('form.basic-form.title.required') }] }
+            ]"
             name="name"
             :placeholder="$t('form.basic-form.title.placeholder')"
           />
@@ -90,9 +85,9 @@
           <a-input
             :placeholder="$t('form.basic-form.client.placeholder')"
             v-decorator="[
-        'customer',
-        { rules: [{ required: true, message: $t('form.basic-form.client.required') }] }
-      ]"
+              'customer',
+              { rules: [{ required: true, message: $t('form.basic-form.client.required') }] }
+            ]"
           />
         </a-form-item>
         <a-form-item
@@ -135,7 +130,7 @@
             </a-select>
           </a-form-item>
         </a-form-item>
-        <a-form-item
+        <!-- <a-form-item
           :wrapperCol="{ span: 24 }"
           style="text-align: center"
         >
@@ -144,23 +139,32 @@
             type="primary"
           >{{ $t('form.basic-form.form.submit') }}</a-button>
           <a-button style="margin-left: 8px">{{ $t('form.basic-form.form.save') }}</a-button>
-        </a-form-item>
+        </a-form-item> -->
       </a-form>
     </a-card>
   </page-header-wrapper>
 </template>
 
 <script>
+import PBackBtn from '../components/pbackbtn/index.vue'
+
 export default {
+  components: {
+    PBackBtn
+  },
   data () {
     return {
       form: this.$form.createForm(this)
     }
   },
   methods: {
+    handleBack () {
+      this.$router.go(-1)
+    },
     // handler
     handleSubmit (e) {
       e.preventDefault()
+      console.log(this.form.getFieldsValue())
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)

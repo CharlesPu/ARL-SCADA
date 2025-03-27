@@ -232,6 +232,7 @@ export default {
   },
   methods: {
     handleAdd () {
+      this.$router.push({ name: 'AreaMetaAdd', params: { } })
     },
     handleExport () {
     },
@@ -260,6 +261,7 @@ export default {
     handleCardEdit (item) {
       // 编辑操作逻辑
       console.log('编辑:', item)
+      this.$router.push({ name: 'AreaMetaEdit', params: { id: item.id } })
     },
     handleCardDelete (item) {
       // 删除操作逻辑

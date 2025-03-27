@@ -7,14 +7,7 @@
     <a-card :bordered="false">
       <template #title>
         <div class="title-container">
-          <a-button
-            type="link"
-            @click="handleBack"
-            class="back-btn"
-          >
-            <a-icon type="arrow-left" />
-          </a-button>
-          <span>ID{{ areaId }}</span>
+          <p-back-btn :txt="areaId"></p-back-btn>
           <div class="action-buttons">
             <a-button
               type="primary"
@@ -57,7 +50,12 @@
 </template>
 
 <script>
+import PBackBtn from '../components/pbackbtn/index.vue'
+
 export default {
+  components: {
+    PBackBtn
+  },
   data () {
     return {
       creator: 'John Doe',
