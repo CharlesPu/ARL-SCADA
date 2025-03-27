@@ -60,6 +60,7 @@
               type="primary"
               icon="plus"
               style="margin-right: 8px; width: 100px"
+              @click="handleAdd()"
             >新建区域</a-button>
             <a-button
               icon="export"
@@ -146,9 +147,13 @@ export default {
     handleCardClick (item) {
       this.$router.push({ name: 'AreaMetaDetail', params: { id: item.id } })
     },
+    handleAdd () {
+      this.$router.push({ name: 'AreaMetaAdd' })
+    },
     handleEdit (item) {
       // 编辑操作逻辑
       console.log('编辑:', item)
+      this.$router.push({ name: 'AreaMetaEdit', params: { id: item.id } })
     },
     handleDelete (item) {
       // 删除操作逻辑

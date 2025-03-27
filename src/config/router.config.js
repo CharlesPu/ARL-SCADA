@@ -25,15 +25,36 @@ export const asyncRouterMap = [
           {
             path: '/meta/area',
             name: 'AreaMeta',
-            component: () => import('@/views/meta/AreaV2'),
-            meta: { title: '区域管理', keepAlive: false }
-          },
-          {
-            path: '/meta/area-detail',
-            name: 'AreaMetaDetail',
-            hidden: true,
-            component: () => import('@/views/meta/AreaDetail'),
-            meta: { title: '区域详情', keepAlive: false }
+            component: RouteView,
+            redirect: '/meta/area/list',
+            hideChildrenInMenu: true,
+            meta: { title: '区域管理', keepAlive: true },
+            children: [
+              {
+                path: '/meta/area/list',
+                name: 'AreaMetaList',
+                component: () => import('@/views/meta/AreaV2'),
+                meta: { title: '区域列表', keepAlive: true }
+              },
+              {
+                path: '/meta/area/detail',
+                name: 'AreaMetaDetail',
+                component: () => import('@/views/meta/AreaDetail'),
+                meta: { title: '区域详情', keepAlive: true }
+              },
+              {
+                path: '/meta/area/add',
+                name: 'AreaMetaAdd',
+                component: () => import('@/views/meta/AreaAdd'),
+                meta: { title: '新增区域', keepAlive: true }
+              },
+              {
+                path: '/meta/area/edit',
+                name: 'AreaMetaEdit',
+                component: () => import('@/views/meta/AreaEdit'),
+                meta: { title: '编辑区域', keepAlive: true }
+              }
+            ]
           },
           {
             path: '/meta/plant',
