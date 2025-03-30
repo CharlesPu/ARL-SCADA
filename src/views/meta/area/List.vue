@@ -50,7 +50,6 @@
               >
                 <a-button
                   type="primary"
-                  @click="$refs.table.refresh(true)"
                 >查询</a-button>
                 <a-button
                   style="margin-left: 8px"
@@ -146,7 +145,6 @@
               <div class="">
                 <card-info
                   :plantNum="item.activeUser"
-                  :new-user="item.newUser"
                 ></card-info>
               </div>
             </a-card>
@@ -206,7 +204,6 @@ export default {
       this.mdl = null
       this.areaAddVisible = true
     },
-
     handleAddOk () {
       const form = this.$refs.createModal.form
       this.confirmLoading = true
