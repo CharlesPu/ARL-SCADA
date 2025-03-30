@@ -8,9 +8,9 @@
               :md="8"
               :sm="24"
             >
-              <a-form-item label="规则编号">
+              <a-form-item label="区域名称">
                 <a-input
-                  v-model="queryParam.id"
+                  v-model="queryParam.name"
                   placeholder=""
                 />
               </a-form-item>
@@ -19,16 +19,11 @@
               :md="8"
               :sm="24"
             >
-              <a-form-item label="使用状态">
-                <a-select
-                  v-model="queryParam.status"
-                  placeholder="请选择"
-                  default-value="0"
-                >
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
+              <a-form-item label="所在位置">
+                <a-input-number
+                  v-model="queryParam.location"
+                  style="width: 100%"
+                />
               </a-form-item>
             </a-col>
             <template v-if="advanced">
@@ -36,54 +31,12 @@
                 :md="8"
                 :sm="24"
               >
-                <a-form-item label="调用次数">
-                  <a-input-number
-                    v-model="queryParam.callNo"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col
-                :md="8"
-                :sm="24"
-              >
-                <a-form-item label="更新日期">
+                <a-form-item label="创建日期">
                   <a-date-picker
-                    v-model="queryParam.date"
+                    v-model="queryParam.created"
                     style="width: 100%"
-                    placeholder="请输入更新日期"
+                    placeholder="请输入创建日期"
                   />
-                </a-form-item>
-              </a-col>
-              <a-col
-                :md="8"
-                :sm="24"
-              >
-                <a-form-item label="使用状态">
-                  <a-select
-                    v-model="queryParam.useStatus"
-                    placeholder="请选择"
-                    default-value="0"
-                  >
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col
-                :md="8"
-                :sm="24"
-              >
-                <a-form-item label="使用状态">
-                  <a-select
-                    placeholder="请选择"
-                    default-value="0"
-                  >
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">关闭</a-select-option>
-                    <a-select-option value="2">运行中</a-select-option>
-                  </a-select>
                 </a-form-item>
               </a-col>
             </template>
@@ -134,6 +87,7 @@
       </div>
       <div class="ant-pro-pages-list-applications-filterCardList">
         <a-list
+          ref="table"
           :loading="loading"
           :data-source="data"
           :grid="{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }"
@@ -191,7 +145,7 @@
               </template>
               <div class="">
                 <card-info
-                  :active-user="item.activeUser"
+                  :plantNum="item.activeUser"
                   :new-user="item.newUser"
                 ></card-info>
               </div>
@@ -199,6 +153,15 @@
           </a-list-item>
         </a-list>
       </div>
+      <area-form
+        ref="createModal"
+        :title="mdl ? '编辑' : '新建'"
+        :visible="areaAddVisible"
+        :loading="confirmLoading"
+        :model="mdl"
+        @cancel="handleAddCancel"
+        @ok="handleAddOk"
+      />
     </a-card>
   </page-header-wrapper>
 </template>
@@ -206,23 +169,30 @@
 <script>
 import { STable, Ellipsis } from '@/components'
 import CardInfo from './components/CardInfo'
+import AreaForm from './modules/Form'
+
+// import { getAreaList, getAreaDetail } from '@/api/meta/area'
 
 export default {
   components: {
     STable,
     Ellipsis,
-    CardInfo
+    CardInfo,
+    AreaForm
   },
   data () {
     return {
       data: [],
       queryParam: {
-        id: '',
-        status: '0',
-        callNo: undefined,
-        date: undefined,
-        useStatus: '0'
+        name: '',
+        location: '',
+        created: undefined
       },
+      // create model
+      areaAddVisible: false,
+      confirmLoading: false,
+      mdl: null,
+      // 高级搜索
       advanced: false,
       loading: true
     }
@@ -232,7 +202,60 @@ export default {
   },
   methods: {
     handleAdd () {
-      this.$router.push({ name: 'AreaMetaAdd', params: { } })
+      // this.$router.push({ name: 'AreaMetaAdd', params: { } })
+      this.mdl = null
+      this.areaAddVisible = true
+    },
+
+    handleAddOk () {
+      const form = this.$refs.createModal.form
+      this.confirmLoading = true
+      form.validateFields((errors, values) => {
+        if (!errors) {
+          console.log('values', values)
+          if (values.id > 0) {
+            // 修改 e.g.
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve()
+              }, 1000)
+            }).then(res => {
+              this.visible = false
+              this.confirmLoading = false
+              // 重置表单数据
+              form.resetFields()
+              // 刷新表格
+              // this.$refs.table.refresh()
+
+              this.$message.info('修改成功')
+            })
+          } else {
+            // 新增
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve()
+              }, 1000)
+            }).then(res => {
+              this.visible = false
+              this.confirmLoading = false
+              // 重置表单数据
+              form.resetFields()
+              // 刷新表格
+              // this.$refs.table.refresh()
+
+              this.$message.info('新增成功')
+            })
+          }
+        } else {
+          this.confirmLoading = false
+        }
+      })
+    },
+    handleAddCancel () {
+      this.areaAddVisible = false
+
+      const form = this.$refs.createModal.form
+      form.resetFields() // 清理表单数据（可不做）
     },
     handleExport () {
     },
@@ -248,11 +271,9 @@ export default {
     },
     resetSearchForm () {
       this.queryParam = {
-        id: '',
-        status: '0',
-        callNo: undefined,
-        date: undefined,
-        useStatus: '0'
+        name: '',
+        location: '',
+        created: undefined
       }
     },
     handleCardClick (item) {
@@ -261,7 +282,9 @@ export default {
     handleCardEdit (item) {
       // 编辑操作逻辑
       console.log('编辑:', item)
-      this.$router.push({ name: 'AreaMetaEdit', params: { id: item.id } })
+      this.areaAddVisible = true
+      this.mdl = { ...item }
+      // this.$router.push({ name: 'AreaMetaEdit', params: { id: item.id } })
     },
     handleCardDelete (item) {
       // 删除操作逻辑

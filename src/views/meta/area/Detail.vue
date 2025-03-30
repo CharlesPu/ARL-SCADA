@@ -40,6 +40,7 @@
             type="primary"
             class="edit-btn"
             @click="handlePlants"
+            style="margin-left: 30px;"
           >
             <a-icon type="search" />查看植株
           </a-button>
@@ -70,13 +71,23 @@ export default {
     this.areaId = this.$route.params.id
     console.log('接收到的区域ID:', this.areaId)
   },
+  mounted () {
+    this.getDetail()
+  },
   methods: {
+    getDetail () {
+      // this.$http.get('/list/article', { params: { count: 8 } }).then(res => {
+      //   console.log('get list res', res)
+      //   this.data = res.result
+      //   this.loading = false
+      // })
+    },
     handleBack () {
       this.$router.go(-1)
     },
     handleEdit () {
       console.log('编辑操作', this.areaId)
-      this.$router.push({ name: 'AreaMetaEdit', params: { id: this.areaId } })
+      // this.$router.push({ name: 'AreaMetaEdit', params: { id: this.areaId } })
     },
     handleDelete () {
       console.log('删除操作', this.areaId)

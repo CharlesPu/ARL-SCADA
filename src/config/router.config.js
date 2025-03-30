@@ -33,40 +33,40 @@ export const asyncRouterMap = [
               {
                 path: '/meta/area/list',
                 name: 'AreaMetaList',
-                component: () => import('@/views/meta/AreaV2'),
+                component: () => import('@/views/meta/area/List'),
                 meta: { title: '区域列表', keepAlive: true }
               },
               {
                 path: '/meta/area/detail',
                 name: 'AreaMetaDetail',
-                component: () => import('@/views/meta/AreaDetail'),
+                component: () => import('@/views/meta/area/Detail'),
                 meta: { title: '区域详情', keepAlive: true }
-              },
-              {
-                path: '/meta/area/add',
-                name: 'AreaMetaAdd',
-                component: () => import('@/views/meta/AreaAdd'),
-                meta: { title: '新增区域', keepAlive: true }
-              },
-              {
-                path: '/meta/area/edit',
-                name: 'AreaMetaEdit',
-                component: () => import('@/views/meta/AreaEdit'),
-                meta: { title: '编辑区域', keepAlive: true }
               }
+              // {
+              //   path: '/meta/area/add',
+              //   name: 'AreaMetaAdd',
+              //   component: () => import('@/views/meta/area/Add'),
+              //   meta: { title: '新增区域', keepAlive: true }
+              // },
+              // {
+              //   path: '/meta/area/edit',
+              //   name: 'AreaMetaEdit',
+              //   component: () => import('@/views/meta/area/Edit'),
+              //   meta: { title: '编辑区域', keepAlive: true }
+              // }
             ]
           },
           {
-            path: '/meta/plant',
-            name: 'PlantMeta',
-            component: () => import('@/views/meta/Plant'),
+            path: '/meta/plant/list',
+            name: 'PlantMetaList',
+            component: () => import('@/views/meta/plant/List'),
             meta: { title: '植株管理', keepAlive: false }
           },
           {
-            path: '/meta/plant-detail',
+            path: '/meta/plant/detail',
             name: 'PlantMetaDetail',
             hidden: true,
-            component: () => import('@/views/meta/PlantDetail'),
+            component: () => import('@/views/meta/plant/Detail'),
             meta: { title: '植株详情', keepAlive: false }
           }
         ]

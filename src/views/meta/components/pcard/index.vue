@@ -1,3 +1,4 @@
+// deprecated
 <template>
   <a-card :bordered="false">
     <template #title>

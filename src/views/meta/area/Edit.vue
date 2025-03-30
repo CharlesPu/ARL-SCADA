@@ -1,3 +1,4 @@
+// deprecated 页面跳转模式
 <template>
   <page-header-wrapper>
     <div>
