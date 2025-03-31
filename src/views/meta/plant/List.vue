@@ -188,13 +188,25 @@
           slot-scope="text, record"
         >
           <template>
-            <a-tooltip title="查看"><a-icon type="search" @click="handleDetail(record)" /></a-tooltip>
+            <a-tooltip title="查看"><a-icon
+                type="search"
+                @click="handleDetail(record)"
+              /></a-tooltip>
             <a-divider type="vertical" />
-            <a-tooltip title="编辑"><a-icon type="edit" @click="handleEdit(record)" /></a-tooltip>
+            <a-tooltip title="编辑"><a-icon
+                type="edit"
+                @click="handleEdit(record)"
+              /></a-tooltip>
             <a-divider type="vertical" />
-            <a-tooltip title="查看采集数据"><a-icon type="bar-chart" @click="handleMetrics(record)" /></a-tooltip>
+            <a-tooltip title="查看采集数据"><a-icon
+                type="bar-chart"
+                @click="handleMetrics(record)"
+              /></a-tooltip>
             <a-divider type="vertical" />
-            <a-tooltip title="删除"><a-icon type="delete" @click="handleDelete(record)" /></a-tooltip>
+            <a-tooltip title="删除"><a-icon
+                type="delete"
+                @click="handleDelete(record)"
+              /></a-tooltip>
           </template>
         </span>
       </s-table>
@@ -415,6 +427,10 @@ export default {
     handleAddBatch () {
       this.stepVisible = true
       this.stepFormTitle = '批量新增植株'
+      // 初始化步骤表单数据
+      this.$nextTick(() => {
+        this.$refs.createStepModal.resetFormData()
+      })
     },
     handleStepOk () {
       // this.stepConfirmLoading = true // 没有用到

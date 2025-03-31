@@ -7,8 +7,8 @@
     :footer="null"
     :maskClosable="false"
     :destroyOnClose="true"
-    @ok="() => { $emit('ok'); resetFormData() }"
-    @cancel="() => { $emit('cancel'); resetFormData() }"
+    @ok="() => { $emit('ok') }"
+    @cancel="() => { $emit('cancel') }"
   >
     <a-spin :spinning="loading">
       <a-card :bordered="false">
@@ -75,12 +75,14 @@ export default {
       }
     },
     finish () {
-      this.currentTab = 0
+      // this.currentTab = 0
       console.log('step form finish')
       this.$emit('ok')
     },
+    // 供父级调用
     resetFormData () {
-      this.currentTab = 0
+      console.log('step form resetFormData')
+      this.currentTab = 0 // 统一收口到本函数进行重置
       // 如果表单中有其他数据，也在这里进行重置
     }
   }
