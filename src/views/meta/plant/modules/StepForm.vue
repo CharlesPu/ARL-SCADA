@@ -23,15 +23,18 @@
         <div class="content">
           <step1
             v-if="currentTab === 0"
+            :initData="formResultData[0]"
             @nextStep="nextStep"
           />
           <step2
             v-if="currentTab === 1"
+            :initData="formResultData[1]"
             @nextStep="nextStep"
             @prevStep="prevStep"
           />
           <step3
             v-if="currentTab === 2"
+            :initData="formResultData[2]"
             @prevStep="prevStep"
             @finish="finish"
           />
@@ -59,17 +62,30 @@ export default {
   },
   data () {
     return {
-      currentTab: 0
+      currentTab: 0,
+      // 按步骤顺序存储数据，0暂时不用
+      // 0 \ 1 \ 2
+      // stepInit\step1\step2
+      formResultData: [{ result: 'stepInit' }, null, null]
     }
   },
+  // created () {
+  //   this.formResultData[0] = { result: 'stepInit' }
+  //   console.log('step form created', this.formResultData)
+  // },
   methods: {
     // handler
-    nextStep () {
+    nextStep (stepData) {
+      var stepNow = this.currentTab + 1
+      this.formResultData[stepNow] = stepData
+      console.log('stepForm nextStep: step' + stepNow + ' result', stepData)
       if (this.currentTab < 2) {
         this.currentTab += 1
       }
     },
     prevStep () {
+      var stepNow = this.currentTab + 1
+      this.formResultData[stepNow] = null
       if (this.currentTab > 0) {
         this.currentTab -= 1
       }
@@ -84,6 +100,7 @@ export default {
       console.log('step form resetFormData')
       this.currentTab = 0 // 统一收口到本函数进行重置
       // 如果表单中有其他数据，也在这里进行重置
+      this.formResultData = [{ result: 'stepInit' }, null, null]
     }
   }
 }

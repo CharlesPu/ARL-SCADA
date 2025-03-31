@@ -20,6 +20,13 @@
 <script>
 export default {
   name: 'Step3',
+  props: {
+    // 接收上一步数据
+    initData: {
+      type: Object,
+      default: null
+    }
+  },
   data () {
     return {
       loading: false,

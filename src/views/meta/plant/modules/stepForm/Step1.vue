@@ -27,7 +27,7 @@
           </p>
           <p class="ant-upload-hint">
             Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-            band files
+            band files{{ initData }}
           </p>
         </a-upload-dragger>
       </a-form-item>
@@ -47,6 +47,13 @@
 <script>
 export default {
   name: 'Step1',
+  props: {
+    // 接收上一步数据
+    initData: {
+      type: Object,
+      default: null
+    }
+  },
   data () {
     return {
       labelCol: { lg: { span: 5 }, sm: { span: 5 } },
@@ -58,10 +65,16 @@ export default {
   },
   methods: {
     nextStep () {
-      this.$emit('nextStep') // todo just for test
+      var stepResult = {}
+      stepResult = { result: 'step1 success' } // todo just for test
+      console.log('step1 nextStep', this.initData, stepResult)
+      // todo just for test
+      this.$emit('nextStep', stepResult)
       // 先校验，通过校验后，才进入下一步
       // if (this.fileUploadStatus === 'done') {
-      //   this.$emit('nextStep')
+      //   this.$emit('nextStep',  {
+      // step2: this.currentData.step2
+      // })
       // } else {
       //   this.$message.error('请上传正确的文件!')
       // }

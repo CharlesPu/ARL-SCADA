@@ -33,6 +33,13 @@ export default {
   components: {
     STable
   },
+  props: {
+    // 接收上一步数据
+    initData: {
+      type: Object,
+      default: null
+    }
+  },
   data () {
     return {
       labelCol: { lg: { span: 5 }, sm: { span: 5 } },
@@ -127,14 +134,17 @@ export default {
   methods: {
     nextStep () {
       this.loading = true
-      // todo validateFields
-      const err = false
       const that = this // note!!!
+      const err = false // todo validateFields
+
+      var stepResult = {}
+      stepResult = { result: 'step2 success' } // todo just for test
+      console.log('step2 nextStep', this.initData, stepResult)
       if (!err) {
         console.log('validate success')
         that.timer = setTimeout(function () {
           that.loading = false
-          that.$emit('nextStep')
+          that.$emit('nextStep', stepResult)
         }, 1500)
       } else {
         that.loading = false
