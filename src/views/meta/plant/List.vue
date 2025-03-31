@@ -363,6 +363,14 @@ export default {
     }
   },
   methods: {
+    handleDetail (record) {
+      this.$router.push({
+        path: '/meta/plant/detail',
+        query: {
+          id: record.id
+        }
+      })
+    },
     handleAdd () {
       this.mdl = null
       this.visible = true

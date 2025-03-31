@@ -12,15 +12,18 @@
         :data="loadGoodsData"
       >
       </s-table>
-      <a-button
-        type="plus"
-        @click="prevStep"
-      >上一步</a-button>
-      <a-button
-        :loading="loading"
-        type="primary"
-        @click="nextStep"
-      >确认导入</a-button>
+      <div style="text-align: center; margin-top: 16px">
+        <a-button
+          type="plus"
+          @click="prevStep"
+          style="margin-right: 24px;"
+        >上一步</a-button>
+        <a-button
+          :loading="loading"
+          type="primary"
+          @click="nextStep"
+        >确认导入</a-button>
+      </div>
     </a-card>
   </div>
 </template>
@@ -138,10 +141,10 @@ export default {
       const err = false // todo validateFields
 
       var stepResult = {}
-      stepResult = { result: 'step2 success' } // todo just for test
+      stepResult = { result: 'step2 success', status: 'success' } // todo just for test
       console.log('step2 nextStep', this.initData, stepResult)
       if (!err) {
-        console.log('validate success')
+        // todo 这里要调用后端接口：confirmed
         that.timer = setTimeout(function () {
           that.loading = false
           that.$emit('nextStep', stepResult)

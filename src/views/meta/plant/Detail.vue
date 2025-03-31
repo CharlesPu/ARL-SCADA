@@ -2,7 +2,7 @@
   <page-header-wrapper>
     <!-- 内容区域（待开发） -->
     <div class="content-container">
-      <!-- 此处预留植物详情内容 -->
+      此处预留植物详情内容
     </div>
   </page-header-wrapper>
 </template>

@@ -8,39 +8,44 @@
       下载模板
     </a-button>
     <!-- <a-divider/> -->
-    <a-form style="max-width: 100%; max-height: 100%; margin: 10px auto 0;">
+    <!-- <a-form style="max-width: 100%; max-height: 100%; margin: 10px auto 0;">
       <a-form-item
         :labelCol="labelCol"
         :wrapperCol="wrapperCol"
-      >
-        <a-upload-dragger
-          name="file"
-          :multiple="true"
-          :action="fileUploadUrl"
-          @change="handleFileChange"
-        >
-          <p class="ant-upload-drag-icon">
-            <a-icon type="inbox" />
-          </p>
-          <p class="ant-upload-text">
-            Click or drag file to this area to upload
-          </p>
-          <p class="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-            band files{{ initData }}
-          </p>
-        </a-upload-dragger>
-      </a-form-item>
-      <a-form-item
+      > -->
+    <a-upload-dragger
+      name="file"
+      :multiple="true"
+      :file-list="fileList"
+      :remove="handleRemove"
+      :before-upload="beforeUpload"
+    >
+      <p class="ant-upload-drag-icon">
+        <a-icon type="inbox" />
+      </p>
+      <p class="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p class="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+        band files
+      </p>
+    </a-upload-dragger>
+    <!-- </a-form-item> -->
+    <!-- <a-form-item
         :wrapperCol="{ span: 24 }"
         style="text-align: center"
-      >
-        <a-button
-          type="primary"
-          @click="nextStep"
-        >下一步</a-button>
-      </a-form-item>
-    </a-form>
+      > -->
+    <div style="text-align: center; margin-top: 16px">
+      <a-button
+        type="primary"
+        :disabled="fileList.length === 0"
+        :loading="uploading"
+        @click="nextStep"
+      >上传</a-button>
+    </div>
+    <!-- </a-form-item> -->
+    <!-- </a-form> -->
   </div>
 </template>
 
@@ -60,7 +65,8 @@ export default {
       wrapperCol: { lg: { span: 24 }, sm: { span: 19 } },
       // todo
       fileUploadUrl: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-      fileUploadStatus: 'uploading' // uploading done error
+      fileList: [],
+      uploading: false
     }
   },
   methods: {
@@ -71,29 +77,46 @@ export default {
       // todo just for test
       this.$emit('nextStep', stepResult)
       // 先校验，通过校验后，才进入下一步
-      // if (this.fileUploadStatus === 'done') {
-      //   this.$emit('nextStep',  {
-      // step2: this.currentData.step2
-      // })
-      // } else {
-      //   this.$message.error('请上传正确的文件!')
-      // }
+      // this.handleUpload()
     },
     downloadTemplate () {
       console.log('download template')
     },
-    handleFileChange (info) {
-      const status = info.file.status
-      this.fileUploadStatus = status
-      console.log('file changed!', status)
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList)
-      }
-      if (status === 'done') {
-        this.$message.success(`${info.file.name} file uploaded successfully.`)
-      } else if (status === 'error') {
-        this.$message.error(`${info.file.name} file upload failed.`)
-      }
+    handleRemove (file) {
+      const index = this.fileList.indexOf(file)
+      const newFileList = this.fileList.slice()
+      newFileList.splice(index, 1)
+      this.fileList = newFileList
+    },
+    beforeUpload (file) {
+      this.fileList = [...this.fileList, file]
+      return false
+    },
+    handleUpload () {
+      const { fileList } = this
+      const formData = new FormData()
+      fileList.forEach(file => {
+        formData.append('files[]', file)
+      })
+      this.uploading = true
+
+      // todo 这里要调用后端接口：process-and-prase
+      // You can use any AJAX library you like
+      // reqwest({
+      //   url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+      //   method: 'post',
+      //   processData: false,
+      //   data: formData,
+      //   success: () => {
+      //     this.fileList = [];
+      //     this.uploading = false;
+      //     this.$message.success('upload successfully.');
+      //   },
+      //   error: () => {
+      //     this.uploading = false;
+      //     this.$message.error('upload failed.');
+      //   },
+      // });
     }
   }
 }

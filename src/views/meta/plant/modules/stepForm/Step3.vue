@@ -2,7 +2,7 @@
   <div>
     <a-card :bordered="false">
       <a-result
-        :status="status"
+        :status="initData.status"
         :title="title"
         :sub-title="description"
       >
@@ -30,7 +30,6 @@ export default {
   data () {
     return {
       loading: false,
-      status: 'success',
       title: '新建成功',
       description: '新建植株xx条'
     }
